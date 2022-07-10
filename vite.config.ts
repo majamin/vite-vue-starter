@@ -1,7 +1,16 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import vue from "@vitejs/plugin-vue";
+import path from "path";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()]
-})
+/**
+ * @type {import('vite').UserConfig}
+ */
+const config = {
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+};
+
+export default config;
