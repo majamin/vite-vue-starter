@@ -4,17 +4,14 @@ import { ref } from "vue";
 defineProps<{ msg: string }>();
 
 const count = ref(0);
+
+const isEven = (n: number): boolean => {
+  return n % 2 === 0;
+};
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
+  <h4>{{ msg }}</h4>
 
   <p>See <code>README.md</code> for more information.</p>
 
@@ -26,6 +23,8 @@ const count = ref(0);
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
   </p>
 
+  <h4 class="mt-4">Transition demo:</h4>
+
   <div class="my-8">
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -35,26 +34,20 @@ const count = ref(0);
       count is: {{ count }}
     </button>
   </div>
+
+  <div class="my-8">
+    <p>
+      I'm an
+      <Transition name="slide-fade" mode="out-in"
+        ><span v-if="isEven(count)">even</span
+        ><span v-else>odd</span></Transition
+      >
+      duck.
+    </p>
+  </div>
+
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
 </template>
-
-<style scoped>
-a {
-  color: #42b983;
-}
-
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
-}
-</style>

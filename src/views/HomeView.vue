@@ -4,5 +4,5 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 <template>
   <img class="w-40 mx-auto" alt="Vue logo" src="/assets/images/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <HelloWorld msg="A good Vite (Vue) + Typescript starter" />
 </template>
