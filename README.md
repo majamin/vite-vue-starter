@@ -13,6 +13,7 @@ The primary framework is [Vue](https://vuejs.org).
 
 - Typescript ([why?](https://www.typescriptlang.org/why-create-typescript))
 - TailwindCSS ([why?](https://cleancommit.io/blog/why-we-use-tailwind-css-as-our-primary-framework/))
+- Green Sock used for some transition animations (e.g. page to page)
 - Vue is written using the modern and scalable composition API
 
 Keep in mind that:
