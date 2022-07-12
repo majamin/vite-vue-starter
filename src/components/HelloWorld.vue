@@ -51,3 +51,15 @@ const isEven = (n: number): boolean => {
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
 </template>
+
+<style scoped lang="postcss">
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+</style>

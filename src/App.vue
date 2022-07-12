@@ -1,21 +1,37 @@
 <script setup lang="ts">
-import NavBar from "./components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
+import gsap from "gsap";
+
+/* Handy references:
+ * https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
+ * https://greensock.com/cheatsheet/
+ */
+
+const beforeEnterView = (el: HTMLDivElement | null) => {
+  el ? (el.style.opacity = "0") : null;
+  el ? (el.style.transform = "translate(-50px,0)") : null;
+};
+
+const enterView = (el: HTMLDivElement | null, done: () => void) => {
+  gsap.to(el, {
+    duration: 0.5,
+    opacity: 1,
+    translateX: 0,
+    onComplete: done,
+  });
+};
 </script>
 
 <template>
-  <NavBar />
-  <router-view></router-view>
+  <NavBar class="mb-14" />
+  <router-view v-slot="{ Component, route }">
+    <transition @before-enter="beforeEnterView" @enter="enterView" :css="false">
+      <component :is="Component" :key="route.fullPath"></component>
+    </transition>
+  </router-view>
 </template>
 
 <style lang="postcss">
-a {
-  @apply text-theme-green-800;
-}
-
-a.router-link-active.router-link-exact-active {
-  @apply text-theme-green-400;
-}
-
 code {
   @apply bg-[#eee] py-1 px-2 rounded-md text-[#304455];
 }
