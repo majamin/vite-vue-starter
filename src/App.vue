@@ -33,7 +33,7 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 
 <style lang="postcss">
 code {
-  @apply bg-[#eee] py-1 px-2 rounded-md text-[#304455];
+  @apply rounded-md bg-[#eee] py-1 px-2 text-[#304455];
 }
 
 #app {
@@ -43,5 +43,9 @@ code {
   text-align: center;
   color: #2c3e50;
   margin-top: 120px;
+}
+
+hr {
+  @apply h-[1px] border-none bg-gradient-to-r from-transparent via-theme-blue-600 to-transparent;
 }
 </style>

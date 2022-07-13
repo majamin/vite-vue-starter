@@ -5,10 +5,10 @@ import HelloWorld from "@/components/HelloWorld.vue";
 <template>
   <main>
     <img
-      class="w-40 mx-auto mb-12"
+      class="mx-auto mb-12 w-60"
       alt="Vue logo"
-      src="/assets/images/logo.png"
+      src="/assets/images/mm.png"
     />
-    <HelloWorld msg="A good Vite (Vue) + Typescript starter" />
+    <HelloWorld msg="Vite + Vue + Typescript" />
   </main>
 </template>

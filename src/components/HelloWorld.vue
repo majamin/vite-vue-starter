@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import gsap from "gsap";
 
 defineProps<{ msg: string }>();
 
@@ -8,26 +9,55 @@ const count = ref(0);
 const isEven = (n: number): boolean => {
   return n % 2 === 0;
 };
+
+onMounted(() => {
+  gsap.from(".logo", {
+    duration: 0.6,
+    opacity: 0,
+    scale: 0,
+    y: 100,
+    ease: "power1",
+    stagger: 0.1,
+  });
+});
 </script>
 
 <template>
-  <h4>{{ msg }}</h4>
+  <h6 class="text-theme-red-600">
+    A good <span class="text-theme-blue-700">{{ msg }}</span> starter
+  </h6>
 
-  <p>See <code>README.md</code> for more information.</p>
+  <div class="logo mx-auto flex max-w-fit justify-items-center">
+    <div class="m-6 flex w-20 justify-items-center">
+      <a href="https://vuejs.org/guide/introduction.html" target="_blank">
+        <img class="h-full w-full" src="/assets/images/vue.png" alt="" />
+      </a>
+    </div>
+    <div class="logo m-6 flex w-20 justify-items-center">
+      <a href="https://vitejs.dev/guide/features.html" target="_blank">
+        <img class="h-full w-full" src="/assets/images/vite.svg" alt="" />
+      </a>
+    </div>
+    <div class="logo m-6 flex w-20 justify-items-center">
+      <a href="https://tailwindcss.com/resources" target="_blank">
+        <img
+          class="h-full w-full"
+          src="/assets/images/tailwindcss.svg"
+          alt=""
+        />
+      </a>
+    </div>
+  </div>
 
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
+  <p class="my-4">See <code>README.md</code> for more information.</p>
 
-  <h4 class="mt-4">Transition demo:</h4>
+  <hr class="my-16" />
 
-  <div class="my-8">
+  <h6>Vue <code>Transition</code> demo:</h6>
+
+  <div class="my-4">
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      class="rounded-md border-2 border-theme-blue-500 bg-white py-2 px-4 font-bold text-theme-blue-500 hover:bg-theme-blue-100"
       type="button"
       @click="count++"
     >
@@ -46,7 +76,7 @@ const isEven = (n: number): boolean => {
     </p>
   </div>
 
-  <p>
+  <p class="mb-20">
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>

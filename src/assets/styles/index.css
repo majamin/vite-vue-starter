@@ -10,7 +10,7 @@
   h4,
   h5,
   h6 {
-    @apply font-normal leading-normal mt-0 mb-2 text-theme-green-600;
+    @apply mt-0 mb-2 font-normal leading-normal text-theme-blue-600;
   }
 
   h1 {
