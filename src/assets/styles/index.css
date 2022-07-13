@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  #app {
+    font-family: Inter, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 120px;
+  }
   /*** TYPOGRAPHY ***/
   h1,
   h2,
@@ -35,5 +43,13 @@
 
   h6 {
     @apply text-xl;
+  }
+
+  code {
+    @apply rounded-md bg-[#eee] py-1 px-2 text-[#304455];
+  }
+
+  hr {
+    @apply h-[1px] border-none bg-gradient-to-r from-transparent via-theme-blue-600 to-transparent;
   }
 }

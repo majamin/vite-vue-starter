@@ -57,7 +57,7 @@ onMounted(() => {
 
   <div class="my-4">
     <button
-      class="rounded-md border-2 border-theme-blue-500 bg-white py-2 px-4 font-bold text-theme-blue-500 hover:bg-theme-blue-100"
+      class="rounded-md border-2 border-theme-blue-500 bg-white py-2 px-4 font-bold text-theme-blue-500 hover:bg-theme-blue-800 hover:text-white"
       type="button"
       @click="count++"
     >

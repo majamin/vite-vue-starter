@@ -1,7 +1,22 @@
+<script setup lang="ts">
+import { RouterLink, RouterOptions } from "vue-router";
+
+// Reference: https://vuejs.org/guide/typescript/composition-api.html
+const props = defineProps<{ routes?: RouterOptions["routes"] }>();
+
+const mainNavRoutes = props.routes
+  ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
+  : null;
+</script>
+
 <template>
   <div class="mx-auto flex w-60 justify-center text-lg">
-    <router-link class="mr-4" :to="{ name: 'Home' }">Home</router-link>
-    <router-link class="" :to="{ name: 'About' }">About</router-link>
+    <router-link
+      v-for="route in mainNavRoutes"
+      class="mr-4"
+      :to="{ name: route.name }"
+      >{{ route.name }}</router-link
+    >
   </div>
 </template>
 
