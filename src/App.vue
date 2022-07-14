@@ -32,9 +32,15 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 
 <template>
   <NavBar class="mb-14" :routes="routes" />
-  <router-view v-slot="{ Component, route }">
-    <transition @before-enter="beforeEnterView" @enter="enterView" :css="false">
-      <component :is="Component" :key="route.fullPath"></component>
-    </transition>
-  </router-view>
+  <div class="mx-auto w-4/5">
+    <router-view v-slot="{ Component, route }">
+      <transition
+        @before-enter="beforeEnterView"
+        @enter="enterView"
+        :css="false"
+      >
+        <component :is="Component" :key="route.fullPath"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>

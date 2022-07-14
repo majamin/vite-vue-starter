@@ -27,18 +27,18 @@ onMounted(() => {
     A good <span class="text-theme-blue-700">{{ msg }}</span> starter
   </h6>
 
-  <div class="logo mx-auto flex max-w-fit justify-items-center">
-    <div class="m-6 flex w-20 justify-items-center">
+  <div class="mx-auto my-10 flex w-3/5 flex-wrap justify-items-center">
+    <div class="logo mx-auto my-6 flex w-36 justify-items-center px-6">
       <a href="https://vuejs.org/guide/introduction.html" target="_blank">
         <img class="h-full w-full" src="/assets/images/vue.png" alt="" />
       </a>
     </div>
-    <div class="logo m-6 flex w-20 justify-items-center">
+    <div class="logo mx-auto my-6 flex w-36 justify-items-center px-6">
       <a href="https://vitejs.dev/guide/features.html" target="_blank">
         <img class="h-full w-full" src="/assets/images/vite.svg" alt="" />
       </a>
     </div>
-    <div class="logo m-6 flex w-20 justify-items-center">
+    <div class="logo mx-auto my-6 flex w-36 justify-items-center px-6">
       <a href="https://tailwindcss.com/resources" target="_blank">
         <img
           class="h-full w-full"
@@ -55,7 +55,7 @@ onMounted(() => {
 
   <h6>Vue <code>Transition</code> demo:</h6>
 
-  <div class="my-4">
+  <div class="my-8">
     <button
       class="rounded-md border-2 border-theme-blue-500 bg-white py-2 px-4 font-bold text-theme-blue-500 hover:bg-theme-blue-800 hover:text-white"
       type="button"
