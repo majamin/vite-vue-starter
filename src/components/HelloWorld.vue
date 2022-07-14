@@ -2,6 +2,9 @@
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
 
+import CardQuoteProfile from "@/components/CardQuoteProfile.vue";
+import FeatureFullBisectedImageText from "@/components/FeatureFullBisectedImageText.vue";
+
 defineProps<{ msg: string }>();
 
 const count = ref(0);
@@ -57,7 +60,7 @@ onMounted(() => {
 
   <div class="my-8">
     <button
-      class="rounded-md border-2 border-theme-blue-500 bg-white py-2 px-4 font-bold text-theme-blue-500 hover:bg-theme-blue-800 hover:text-white"
+      class="rounded-md border-2 border-theme-blue-500 bg-white px-4 py-2 font-bold text-theme-blue-500 hover:bg-theme-blue-800 hover:text-white"
       type="button"
       @click="count++"
     >
@@ -80,6 +83,9 @@ onMounted(() => {
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
+  <hr class="mb-20" />
+  <CardQuoteProfile class="my-10" />
+  <FeatureFullBisectedImageText />
 </template>
 
 <style scoped lang="postcss">

@@ -28,3 +28,8 @@ For example:
 
 - To preview the site at `localhost:3333`, run `npm run dev` from the command line.
 - To build the site at , run `npm run build`. The completed project will live under `/dist`.
+
+## Helpful things
+
+https://www.w3.org/wiki/Common_HTML_entities_used_for_typography
+https://css-tricks.com/using-svg/

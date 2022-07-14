@@ -7,13 +7,16 @@
     @apply text-center font-sans text-[#2c3e50] antialiased;
   }
   /*** TYPOGRAPHY ***/
+  p {
+    @apply font-sans text-base antialiased;
+  }
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply mt-0 mb-2 font-normal leading-normal text-theme-blue-600;
+    @apply mt-0 mb-2 font-normal leading-normal;
   }
 
   h1 {

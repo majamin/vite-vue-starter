@@ -1,10 +1,12 @@
-import { createApp } from "vue";
+// Router
 import { routes } from "./router";
 import { createRouter, createWebHistory } from "vue-router";
+
+// TailwindCSS
 import "./assets/styles/index.css";
 
+import { createApp } from "vue";
 import App from "./App.vue";
-
 const app = createApp(App);
 
 /******************************************************************************

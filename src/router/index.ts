@@ -1,9 +1,8 @@
 import { RouterOptions } from "vue-router";
 import "vue-router";
-import HomeView from "@/views/HomeView.vue";
 
+import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
-import MoreView from "@/views/MoreView.vue";
 
 import NotFound from "@/views/NotFound.vue";
 

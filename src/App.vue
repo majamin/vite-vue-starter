@@ -1,12 +1,9 @@
 <script setup lang="ts">
-/* Vite + Vue starter
- * by Marian <majamin@gmail.com>
- * Handy references:
- * https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
- * https://greensock.com/cheatsheet/ */
-
-/* GreenSock
+/* Handy references:
+ * Transitions: https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
+ * GreenSock:   https://greensock.com/cheatsheet/
  */
+
 import gsap from "gsap";
 
 import NavBar from "@/components/NavBar.vue";
@@ -32,7 +29,7 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 
 <template>
   <NavBar class="mb-14" :routes="routes" />
-  <div class="mx-auto w-4/5">
+  <div class="mx-auto">
     <router-view v-slot="{ Component, route }">
       <transition
         @before-enter="beforeEnterView"
