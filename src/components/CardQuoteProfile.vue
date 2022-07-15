@@ -1,17 +1,19 @@
 <template>
   <div
-    class="mx-auto flex max-w-6xl flex-wrap items-center justify-evenly overflow-visible rounded-md bg-gradient-to-r from-indigo-600 to-purple-800 p-6 text-gray-200 lg:flex-nowrap"
+    class="flex max-w-6xl flex-wrap items-center justify-evenly overflow-visible rounded-md bg-gradient-to-r from-indigo-600 to-purple-800 text-gray-200"
   >
     <div
-      class="-mx-10 mb-6 -mt-10 flex min-w-fit items-center justify-center overflow-hidden rounded-lg border-none drop-shadow-md lg:mb-0"
+      class="flex items-center justify-center overflow-hidden rounded-lg border-none bg-gradient-to-r from-theme-red-300 to-theme-blue-300 drop-shadow-md md:-my-10"
     >
       <img
-        class="h-auto max-w-sm"
+        class="h-auto max-w-md mix-blend-multiply"
         src="http://placeimg.com/640/480/any"
         alt=""
       />
     </div>
-    <div class="text lg:ml-16">
+    <div
+      class="mx-8 mt-10 pb-10 text-left sm:mx-0 sm:px-20 md:mt-0 md:ml-10 md:w-1/2 md:p-10"
+    >
       <div class="mb-6">
         <svg width="40px" height="30px">
           <path
@@ -25,17 +27,17 @@
         </svg>
       </div>
       <div>
-        <p class="text-left text-lg text-gray-300">
+        <p class="text-lg text-gray-300">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. In natus,
           quos unde tenetur sed perspiciatis pariatur! Quas id excepturi numquam
           rerum modi error accusamus dolores tenetur ad eligendi! Aliquam, sed!
         </p>
       </div>
       <div class="mt-6">
-        <p class="text-left text-xs text-gray-300">John Nobody</p>
+        <p class="text-xs text-gray-300">John Nobody</p>
       </div>
       <div>
-        <p class="text-left text-xs text-gray-300">Their position at CO</p>
+        <p class="text-xs text-gray-300">Their position at CO</p>
       </div>
     </div>
   </div>
