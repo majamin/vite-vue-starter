@@ -52,7 +52,7 @@
   }
   /*** COMPONENTS ***/
   .btn {
-    @apply max-w-fit rounded py-2 px-4 font-semibold transition-colors duration-200;
+    @apply min-w-fit rounded py-2 px-4 font-semibold transition-colors duration-200;
   }
   .btn-indigo {
     @apply bg-indigo-600 text-white;

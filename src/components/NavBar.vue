@@ -7,7 +7,7 @@ const props = defineProps<{ routes?: RouterOptions["routes"] }>();
 
 const mobileMenu = ref(false);
 
-const dropDownMenu = ref(false);
+const userMenu = ref(false);
 
 const mainNavRoutes = props.routes
   ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
@@ -61,9 +61,9 @@ const mainNavRoutes = props.routes
           </svg>
         </button>
       </div>
-      <nav
+      <div
         :class="{ flex: mobileMenu, hidden: !mobileMenu }"
-        class="flex-grow flex-col pb-4 md:flex md:flex-row md:justify-end md:pb-0"
+        class="main-nav flex-grow flex-col pb-4 md:flex md:flex-row md:justify-end md:pb-0"
       >
         <div
           class="main-route relative flex flex-col justify-items-center"
@@ -83,16 +83,16 @@ const mainNavRoutes = props.routes
             </ul>
           </div>
         </div>
-        <div class="relative">
+        <div class="relative mr-4">
           <button
-            @click="dropDownMenu = !dropDownMenu"
+            @click="userMenu = !userMenu"
             class="dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 focus:shadow-outline mt-2 flex w-full flex-row items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0 md:ml-4 md:inline md:w-auto"
           >
-            <span>Dropdown</span>
+            <span>Marian</span>
             <svg
               fill="currentColor"
               viewBox="0 0 20 20"
-              :class="{ 'rotate-180': dropDownMenu, 'rotate-0': !dropDownMenu }"
+              :class="{ 'rotate-180': userMenu, 'rotate-0': !userMenu }"
               class="mt-1 ml-1 inline h-4 w-4 transform transition-transform duration-200 md:-mt-1"
             >
               <path
@@ -104,7 +104,7 @@ const mainNavRoutes = props.routes
           </button>
           <Transition name="fade"
             ><div
-              v-if="dropDownMenu"
+              v-if="userMenu"
               class="absolute right-0 mt-2 w-full origin-top-right rounded-md shadow-lg md:w-48"
             >
               <div
@@ -129,30 +129,35 @@ const mainNavRoutes = props.routes
             </div></Transition
           >
         </div>
-      </nav>
+      </div>
+      <div>
+        <router-link :to="{ name: 'SignIn' }"
+          ><button class="btn btn-indigo">Sign In</button></router-link
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="postcss">
 /*** MAIN NAVBAR STYLES ***/
-nav a {
+.main-nav a {
   @apply relative mt-2 rounded-lg px-4 py-2 text-sm font-semibold text-theme-blue-800 md:mt-0 md:ml-4;
 }
 
-nav a:after {
+.main-nav a:after {
   @apply absolute top-0 left-0 h-[0.1rem] w-0 bg-theme-blue-200 transition-all duration-300 content-[""];
 }
 
-nav a:hover:after {
+.main-nav a:hover:after {
   @apply absolute top-0 left-0 h-[0.1rem] w-full bg-theme-blue-200 content-[""];
 }
 
-nav a.router-link-active.router-link-exact-active {
+.main-nav a.router-link-active.router-link-exact-active {
   @apply text-theme-blue-700;
 }
 
-nav a.router-link-active.router-link-exact-active:after {
+.main-nav a.router-link-active.router-link-exact-active:after {
   @apply absolute -bottom-2 left-0 h-[0.1rem] w-full bg-theme-blue-700 content-[""];
 }
 
