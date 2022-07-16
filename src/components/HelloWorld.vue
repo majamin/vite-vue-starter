@@ -84,7 +84,7 @@ onMounted(() => {
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
   <hr class="mb-20" />
-  <CardQuoteProfile class="my-10" />
+  <CardQuoteProfile class="m-10" />
   <FeatureFullBisectedImageText />
 </template>
 
