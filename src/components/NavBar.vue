@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { RouterLink, RouterOptions } from "vue-router";
+import { RouteRecordName, RouterLink, RouterOptions } from "vue-router";
 
 // Reference: https://vuejs.org/guide/typescript/composition-api.html
 const props = defineProps<{ routes?: RouterOptions["routes"] }>();
 
-const mobileMenu = ref(false);
+const mobileMenu = ref<boolean>(false);
 
-const userMenu = ref(false);
+const userMenu = ref<boolean>(false);
+
+const subMenu = ref<RouteRecordName | undefined>();
 
 const mainNavRoutes = props.routes
   ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
@@ -20,17 +22,17 @@ const mainNavRoutes = props.routes
     class="dark-mode:text-gray-200 dark-mode:bg-gray-800 w-full bg-white text-gray-700"
   >
     <div
-      class="mx-auto flex max-w-screen-xl flex-col px-4 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8"
+      class="mx-auto flex max-w-screen-xl flex-col px-4 md:flex-row md:items-center md:justify-between"
     >
       <div class="flex flex-row items-center justify-between p-4">
         <router-link :to="{ name: 'Home' }">
           <img
-            class="mr-6 w-10"
+            class="mr-6 w-12"
             alt="Marian Minar Logo"
             src="/assets/images/mm.png"
           />
         </router-link>
-        <div class="hidden sm:block">
+        <div class="hidden lg:block">
           <span
             class="dark-mode:text-white focus:shadow-outline rounded-lg text-lg font-semibold uppercase tracking-widest text-theme-blue-600 focus:outline-none"
             >MARIAN</span
@@ -66,22 +68,27 @@ const mainNavRoutes = props.routes
         class="main-nav flex-grow flex-col pb-4 md:flex md:flex-row md:justify-end md:pb-0"
       >
         <div
-          class="main-route relative flex flex-col justify-items-center"
+          class="main-route relative flex flex-col"
           v-for="route in mainNavRoutes"
         >
-          <router-link :to="route.path">{{ route.name }} </router-link>
-          <div
-            v-if="route.children"
-            class="subroutes invisible absolute right-0 top-9 z-10 max-h-fit w-full origin-top-right rounded-md bg-gray-50 opacity-0 shadow-lg md:w-48"
+          <router-link @mouseover="subMenu = route.name" :to="route.path"
+            >{{ route.name }}
+          </router-link>
+          <Transition name="fade"
+            ><div
+              @mouseleave="subMenu = undefined"
+              v-if="route.children && subMenu == route.name"
+              class="subroutes absolute right-0 top-9 max-h-fit w-full origin-top-right rounded-md bg-gray-50 shadow-lg md:w-48"
+            >
+              <ul class="flex flex-wrap">
+                <li v-for="subroute in route.children" class="p-6">
+                  <router-link :to="subroute.path">
+                    {{ subroute.name }}
+                  </router-link>
+                </li>
+              </ul>
+            </div></Transition
           >
-            <ul class="flex flex-wrap">
-              <li v-for="subroute in route.children" class="p-6">
-                <router-link :to="subroute.path">
-                  {{ subroute.name }}
-                </router-link>
-              </li>
-            </ul>
-          </div>
         </div>
         <div class="relative mr-4">
           <button
@@ -129,11 +136,11 @@ const mainNavRoutes = props.routes
             </div></Transition
           >
         </div>
-      </div>
-      <div>
-        <router-link :to="{ name: 'SignIn' }"
-          ><button class="btn btn-indigo">Sign In</button></router-link
-        >
+        <div>
+          <router-link :to="{ name: 'SignIn' }"
+            ><button class="btn btn-indigo">Sign In</button></router-link
+          >
+        </div>
       </div>
     </div>
   </div>

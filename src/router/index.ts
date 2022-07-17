@@ -7,6 +7,7 @@ import AboutView from "@/views/AboutView.vue";
 import NotFound from "@/views/NotFound.vue";
 import Register from "@/views/Register.vue";
 import SignIn from "@/views/SignIn.vue";
+import NewSignIn from "@/views/NewSignIn.vue";
 
 // https://router.vuejs.org/guide/advanced/meta.html#typescript
 declare module "vue-router" {
@@ -84,6 +85,11 @@ export const routes: RouterOptions["routes"] = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/new-sign-in",
+    name: "NewSignIn",
+    component: NewSignIn,
   },
   {
     path: "/sign-in",
