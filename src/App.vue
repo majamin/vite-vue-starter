@@ -28,7 +28,7 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 </script>
 
 <template>
-  <NavBar class="mb-14" :routes="routes" />
+  <NavBar class="z-10 mb-14" :routes="routes" />
   <div class="mx-auto">
     <router-view v-slot="{ Component, route }">
       <transition
