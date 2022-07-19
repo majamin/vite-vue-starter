@@ -1,13 +1,21 @@
-// Router
-import router from "@/router";
 import { createPinia } from "pinia";
+import router from "@/router";
 
 // TailwindCSS
 import "./assets/styles/index.css";
 
 import { createApp } from "vue";
 import App from "./App.vue";
+
 const app = createApp(App);
+
+/******************************************************************************
+ *
+ * Pinia is the successor of Vuex. Pinia manages state across your app.
+ *
+ *****************************************************************************/
+// State management
+app.use(createPinia());
 
 /******************************************************************************
  *
@@ -17,14 +25,6 @@ const app = createApp(App);
  *****************************************************************************/
 // Router
 app.use(router);
-
-/******************************************************************************
- *
- * Pinia is the successor of Vuex. Pinia manages state across your app.
- *
- *****************************************************************************/
-// State management
-app.use(createPinia());
 
 // mount
 app.mount("#app");

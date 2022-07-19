@@ -9,7 +9,7 @@ import gsap from "gsap";
 import NavBar from "@/components/NavBar.vue";
 
 /* Import routes to pass to navigation */
-import { routes } from "./router";
+import { routes } from "@/router";
 
 /* GreenSock handles page transitions */
 const beforeEnterView = (el: HTMLDivElement | null) => {

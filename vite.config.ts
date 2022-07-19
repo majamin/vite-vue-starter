@@ -1,10 +1,8 @@
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "url";
+import { UserConfig } from "vite";
 
-/**
- * @type {import('vite').UserConfig}
- */
-const config = {
+const config: UserConfig = {
   plugins: [vue()],
   resolve: {
     alias: {

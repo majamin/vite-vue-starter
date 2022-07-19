@@ -7,22 +7,19 @@ import {
   RouterOptions,
 } from "vue-router";
 
+import { useAuthStore } from "@/stores";
+const authStore = useAuthStore();
+
 // Reference: https://vuejs.org/guide/typescript/composition-api.html
 const props = defineProps<{ routes?: RouterOptions["routes"] }>();
-
 const mobileMenu = ref<boolean>(false);
-
 const userMenu = ref<boolean>(false);
-
-var subMenu = ref<RouteRecordName | undefined>();
-
+const subMenu = ref<RouteRecordName | undefined>();
 const closeSubMenu = () => (subMenu.value = undefined);
-
 const openSubMenu = (route?: RouteRecordRaw | undefined) => {
   route ? (subMenu.value = route.name) : null;
   // if (route) console.log(typeof route.name);
 };
-
 const mainNavRoutes: RouteRecordRaw[] | null = props.routes
   ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
   : null;
@@ -74,7 +71,7 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
         >
           <!-- SUBNAVIGATION LINKS -->
           <div
-            class="relative right-0 mt-2 max-w-fit cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold text-theme-blue-800 after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:bg-theme-blue-200 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] md:mt-0 md:ml-4"
+            class="mt-2 mr-10 max-w-fit cursor-pointer rounded-lg py-2 text-sm font-semibold text-theme-blue-800 after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:bg-theme-blue-200 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] md:mt-0 md:ml-4"
             @mouseover="openSubMenu(route)"
           >
             {{ route.name }}
@@ -98,7 +95,11 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
         <div
           class="relative flex max-w-fit flex-col items-center justify-center md:flex-row"
         >
-          <div @mouseleave="userMenu = false" class="relative mr-4">
+          <div
+            @mouseleave="userMenu = false"
+            v-if="authStore.isLoggedIn"
+            class="relative mr-4"
+          >
             <button
               @click="
                 {
@@ -108,7 +109,9 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
               "
               class="dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 focus:shadow-outline mt-2 items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0 md:ml-4 md:inline md:w-auto"
             >
-              <span>Marian</span>
+              <span>{{
+                authStore.user ? authStore.user.email : "no-email"
+              }}</span>
               <svg
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -130,10 +133,11 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
                 <div
                   class="dark-mode:bg-gray-800 rounded-md bg-white px-2 py-2 shadow"
                 >
-                  <a
+                  <router-link
+                    @click="userMenu = false"
                     class="dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0"
-                    href="#"
-                    >Link #1</a
+                    :to="{ name: 'UserProfile' }"
+                    >Profile</router-link
                   >
                   <a
                     class="dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0"
@@ -149,10 +153,15 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
               </div></Transition
             >
           </div>
-          <div>
+          <div v-if="!authStore.isLoggedIn">
             <router-link :to="{ name: 'SignIn' }"
               ><button class="btn btn-indigo">Sign In</button></router-link
             >
+          </div>
+          <div v-if="authStore.isLoggedIn">
+            <button @click="authStore.logoutUser" class="btn btn-indigo">
+              Sign Out
+            </button>
           </div>
         </div>
       </div>

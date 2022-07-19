@@ -1,24 +1,43 @@
-import { createRouter, createWebHistory, RouterOptions } from "vue-router";
-import { getCurrentUser } from "@/plugins/firebase";
+import { useAuthStore } from "@/stores";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import NotFound from "@/views/NotFound.vue";
-import Register from "@/views/Register.vue";
+import Register from "@/views/RegisterEmailPassword.vue";
 import SignIn from "@/views/SignIn.vue";
-import NewSignIn from "@/views/NewSignIn.vue";
+import UserProfile from "@/views/UserProfile.vue";
+
+const authCheck = (to: any, _: any, next: any) => {
+  const store = useAuthStore();
+  console.log("authCheck", store.isLoggedIn);
+  if (store.isLoggedIn) {
+    if (to.name === "SignIn") {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    if (to.name === "SignIn") {
+      next();
+    } else {
+      next({ name: "SignIn" });
+    }
+  }
+};
 
 // https://router.vuejs.org/guide/advanced/meta.html#typescript
 declare module "vue-router" {
   interface RouteMeta {
     title: string;
-    mainNav: boolean;
+    mainNav?: boolean;
+    requireAuth?: boolean;
   }
 }
 
 // For child routes, see https://router.vuejs.org/guide/advanced/meta.html#route-meta-fields
-export const routes: RouterOptions["routes"] = [
+export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
@@ -31,16 +50,6 @@ export const routes: RouterOptions["routes"] = [
     meta: { title: "About", mainNav: true },
     component: AboutView,
     children: [
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
       {
         path: "nothing",
         name: "Nothing",
@@ -69,32 +78,26 @@ export const routes: RouterOptions["routes"] = [
         name: "Nothing",
         component: NotFound,
       },
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
     ],
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
-  },
-  {
-    path: "/new-sign-in",
-    name: "NewSignIn",
-    component: NewSignIn,
+    meta: { title: "Register", mainNav: false },
   },
   {
     path: "/sign-in",
     name: "SignIn",
     component: SignIn,
+    meta: { title: "Sign In", mainNav: false },
+  },
+  {
+    path: "/user-profile",
+    name: "UserProfile",
+    meta: { title: "User Profile", mainNav: false, requireAuth: true },
+    component: UserProfile,
+    beforeEnter: authCheck,
   },
   { path: "/:path(.*)", component: NotFound },
 ];
@@ -105,11 +108,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, _, next) => {
-  const authStatus = await getCurrentUser();
+  const authStore = useAuthStore();
+  const authStatus = await authStore.initializeAuthListener();
   const requireAuth = to.matched.some((route) => route.meta.requireAuth);
 
   if (requireAuth && !authStatus) {
-    next({ path: "/login" });
+    next({ name: "SignIn" });
   } else {
     next();
   }

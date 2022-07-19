@@ -1,4 +1,15 @@
-<script setup></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useAuthStore } from "@/stores";
+import { LoginData } from "@/stores/user";
+import BaseInput from "@/components/BaseInput.vue";
+
+const authStore = useAuthStore();
+const login = (data: LoginData) => authStore.logInUser(data);
+
+const password = ref("");
+const email = ref("");
+</script>
 <template>
   <section class="">
     <div class="text-grey-800 h-full px-6">
@@ -108,22 +119,12 @@
 
             <!-- Email input -->
             <div class="mb-6">
-              <input
-                type="text"
-                class="form-control m-0 block w-full rounded border border-solid border-gray-300 bg-white bg-clip-padding px-4 py-2 text-xl font-normal text-gray-700 transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
-                id="exampleFormControlInput2"
-                placeholder="Email address"
-              />
+              <BaseInput type="email" label="Email" v-model="email" />
             </div>
 
             <!-- Password input -->
             <div class="mb-6">
-              <input
-                type="password"
-                class="form-control m-0 block w-full rounded border border-solid border-gray-300 bg-white bg-clip-padding px-4 py-2 text-xl font-normal text-gray-700 transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
-                id="exampleFormControlInput2"
-                placeholder="Password"
-              />
+              <BaseInput type="password" label="Password" v-model="password" />
             </div>
 
             <div class="mb-6 flex items-center justify-between">
@@ -144,7 +145,7 @@
 
             <div class="text-center lg:text-left">
               <button
-                @click="submitSignInData"
+                @click="login({ email, password })"
                 type="button"
                 class="inline-block rounded bg-blue-600 py-3 px-7 text-sm font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
               >
