@@ -1,15 +1,21 @@
 <script setup lang="ts">
-/* Handy references:
- * Transitions: https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
- * GreenSock:   https://greensock.com/cheatsheet/
- */
-
-import gsap from "gsap";
-
+import { useUserStore } from "@/stores";
+import { gsap } from "gsap/all";
+import { routes } from "@/router";
 import NavBar from "@/components/NavBar.vue";
 
+//import { ref } from "vue";
+//import { useUserStore } from "@/stores";
+//import gsap from "gsap";
+//import NavBar from "@/components/NavBar.vue";
+
 /* Import routes to pass to navigation */
-import { routes } from "@/router";
+
+const userStore = useUserStore();
+
+const userPrefersDark = userStore.prefersDark;
+
+// useUserStore().prefersDark;
 
 /* GreenSock handles page transitions */
 const beforeEnterView = (el: HTMLDivElement | null) => {
@@ -28,16 +34,24 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 </script>
 
 <template>
-  <NavBar class="z-10 mb-14" :routes="routes" />
-  <div class="mx-auto">
-    <router-view v-slot="{ Component, route }">
-      <transition
-        @before-enter="beforeEnterView"
-        @enter="enterView"
-        :css="false"
-      >
-        <component :is="Component" :key="route.fullPath"></component>
-      </transition>
-    </router-view>
-  </div>
+  <main :class="{ dark: userPrefersDark }">
+    <NavBar class="z-10 mb-14" :routes="routes" />
+    <div class="mx-auto">
+      <router-view v-slot="{ Component, route }">
+        <transition
+          @before-enter="beforeEnterView"
+          @enter="enterView"
+          :css="false"
+        >
+          <component :is="Component" :key="route.fullPath"></component>
+        </transition>
+      </router-view>
+    </div>
+  </main>
 </template>
+
+<style scoped lang="postcss">
+#app {
+  @apply bg-white dark:bg-gray-800;
+}
+</style>

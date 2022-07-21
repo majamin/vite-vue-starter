@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores";
-import { LoginData } from "@/stores/user";
+import { LoginData } from "@/stores/auth";
 import BaseInput from "@/components/BaseInput.vue";
 
 const authStore = useAuthStore();

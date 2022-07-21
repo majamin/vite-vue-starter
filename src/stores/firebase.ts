@@ -18,7 +18,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { LoginData } from "@/stores/user";
+import { LoginData } from "@/stores/auth";
 
 var firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

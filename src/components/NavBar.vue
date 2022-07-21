@@ -12,23 +12,25 @@ const authStore = useAuthStore();
 
 // Reference: https://vuejs.org/guide/typescript/composition-api.html
 const props = defineProps<{ routes?: RouterOptions["routes"] }>();
+const mainNavRoutes: RouteRecordRaw[] | null = props.routes
+  ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
+  : null;
+
 const mobileMenu = ref<boolean>(false);
 const userMenu = ref<boolean>(false);
 const subMenu = ref<RouteRecordName | undefined>();
+
 const closeSubMenu = () => (subMenu.value = undefined);
 const openSubMenu = (route?: RouteRecordRaw | undefined) => {
   route ? (subMenu.value = route.name) : null;
   // if (route) console.log(typeof route.name);
 };
-const mainNavRoutes: RouteRecordRaw[] | null = props.routes
-  ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
-  : null;
 </script>
 
 <template>
   <!-- Using: https://tailwindcomponents.com/component/responsive-navbar-with-dropdown -->
   <nav
-    class="dark-mode:text-gray-200 dark-mode:bg-gray-800 z-100 w-full bg-white text-gray-700 md:px-4"
+    class="z-100 w-full bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200 md:px-4"
   >
     <div
       class="z-100 mx-auto flex max-w-screen-xl flex-col md:flex-row md:items-center md:justify-between"
@@ -43,15 +45,12 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
           />
         </router-link>
         <!-- COMPANY NAME -->
-        <div class="hidden min-w-fit lg:flex">
-          <span
-            class="dark-mode:text-white focus:shadow-outline mx-2 rounded-lg text-lg font-semibold uppercase tracking-widest text-theme-blue-600 focus:outline-none"
-            >MARIAN</span
-          >
-          <span
-            class="dark-mode:text-white focus:shadow-outline rounded-lg text-lg font-semibold uppercase tracking-widest text-theme-blue-700 focus:outline-none"
-          >
-            MINAR</span
+        <div
+          class="hidden min-w-fit text-lg font-semibold uppercase tracking-widest lg:flex"
+        >
+          <span class="mr-2 text-theme-blue-700 dark:text-white">marian</span>
+          <span class="text-theme-blue-700 dark:font-bold dark:text-gray-400"
+            >minar</span
           >
         </div>
       </div>
@@ -62,19 +61,23 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
           hidden: !mobileMenu,
           'opacity-100': mobileMenu,
         }"
-        class="z-10 w-screen flex-grow flex-col bg-gray-50 pb-4 md:flex md:flex-row md:justify-end md:bg-white md:pb-0"
+        class="z-10 w-screen flex-grow flex-col pb-4 md:flex md:flex-row md:justify-end md:pb-0"
       >
         <div
-          class="relative flex max-w-fit flex-col items-center justify-center"
+          class="flex max-w-fit flex-col items-center justify-center"
           v-for="route in mainNavRoutes"
           @mouseleave="closeSubMenu"
         >
           <!-- SUBNAVIGATION LINKS -->
           <div
-            class="mt-2 mr-10 max-w-fit cursor-pointer rounded-lg py-2 text-sm font-semibold text-theme-blue-800 after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:bg-theme-blue-200 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] md:mt-0 md:ml-4"
+            class="relative mt-2 mr-10 max-w-fit cursor-pointer rounded-lg py-2 text-sm font-semibold text-theme-blue-800 dark:text-white md:mt-0 md:ml-4"
             @mouseover="openSubMenu(route)"
           >
-            {{ route.name }}
+            <div
+              class="after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] dark:after:bg-white"
+            >
+              {{ route.name }}
+            </div>
             <Transition name="fade"
               ><div
                 v-if="subMenu == route.name"
@@ -107,7 +110,7 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
                   subMenu = undefined;
                 }
               "
-              class="dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 focus:shadow-outline mt-2 items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0 md:ml-4 md:inline md:w-auto"
+              class="focus:shadow-outline mt-2 items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0 md:ml-4 md:inline md:w-auto"
             >
               <span>{{
                 authStore.user ? authStore.user.email : "no-email"
@@ -131,21 +134,21 @@ const mainNavRoutes: RouteRecordRaw[] | null = props.routes
                 class="absolute right-0 w-full origin-top-right rounded-md shadow-lg md:w-48"
               >
                 <div
-                  class="dark-mode:bg-gray-800 rounded-md bg-white px-2 py-2 shadow"
+                  class="rounded-md bg-white px-2 py-2 shadow dark:bg-gray-800"
                 >
                   <router-link
                     @click="userMenu = false"
-                    class="dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0"
+                    class="focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0"
                     :to="{ name: 'UserProfile' }"
                     >Profile</router-link
                   >
                   <a
-                    class="dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0"
+                    class="focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0"
                     href="#"
                     >Link #2</a
                   >
                   <a
-                    class="dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none md:mt-0"
+                    class="focus:shadow-outline mt-2 block rounded-lg bg-transparent px-4 py-2 text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0"
                     href="#"
                     >Link #3</a
                   >

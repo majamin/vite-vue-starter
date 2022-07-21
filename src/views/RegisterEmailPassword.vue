@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useAuthStore, LoginData } from "@/stores/user";
+import { useAuthStore, LoginData } from "@/stores/auth";
 import BaseInput from "@/components/BaseInput.vue";
 const firstName = ref("");
 const lastName = ref("");
