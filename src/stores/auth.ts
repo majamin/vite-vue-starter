@@ -23,7 +23,6 @@ export interface LoginData {
 interface State {
   user: fbUser | null;
   profile: any;
-  prefersDark: boolean;
   error: null;
 }
 
@@ -32,7 +31,6 @@ export const useAuthStore = defineStore("authStore", {
   state: (): State => ({
     user: null,
     profile: null,
-    prefersDark: false,
     error: null,
   }),
   getters: {

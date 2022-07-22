@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import {
   RouteRecordName,
   RouteRecordRaw,
@@ -7,6 +8,7 @@ import {
   RouterOptions,
 } from "vue-router";
 
+import { useUserStore } from "@/stores";
 import { useAuthStore } from "@/stores";
 const authStore = useAuthStore();
 
@@ -25,6 +27,10 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
   route ? (subMenu.value = route.name) : null;
   // if (route) console.log(typeof route.name);
 };
+
+const userStore = useUserStore();
+const { prefersDark } = storeToRefs(userStore);
+const toggleDark = userStore.toggleDark;
 </script>
 
 <template>
@@ -94,6 +100,27 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
             >
           </div>
         </div>
+        <!-- DARK MODE TOGGLE -->
+        <div class="mr-4 flex w-14 flex-col items-center justify-center">
+          <div
+            @click="toggleDark"
+            class="bg-theme-grey-100 h-6 w-16 cursor-pointer rounded-full p-1 shadow-inner shadow-zinc-400"
+          >
+            <div class="max-w-fit">
+              <div
+                :class="{
+                  'dark:translate-x-10': prefersDark,
+                  'translate-x-0': !prefersDark,
+                }"
+                class="m-0 h-4 w-4 rounded-full bg-gradient-to-r from-white to-gray-100 shadow-sm shadow-zinc-500 transition-all duration-300"
+              >
+                <div
+                  class="h-[0.95rem] w-[0.95em] rounded-full bg-gradient-to-r from-gray-100 to-gray-50"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- USER LINKS -->
         <div
           class="relative flex max-w-fit flex-col items-center justify-center md:flex-row"
@@ -113,7 +140,7 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
               class="focus:shadow-outline mt-2 items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0 md:ml-4 md:inline md:w-auto"
             >
               <span>{{
-                authStore.user ? authStore.user.email : "no-email"
+                authStore.profile ? authStore.profile.first : "First Name"
               }}</span>
               <svg
                 fill="currentColor"
@@ -156,15 +183,17 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
               </div></Transition
             >
           </div>
-          <div v-if="!authStore.isLoggedIn">
-            <router-link :to="{ name: 'SignIn' }"
-              ><button class="btn btn-indigo">Sign In</button></router-link
-            >
-          </div>
-          <div v-if="authStore.isLoggedIn">
-            <button @click="authStore.logoutUser" class="btn btn-indigo">
-              Sign Out
-            </button>
+          <div class="mx-4">
+            <div v-if="!authStore.isLoggedIn">
+              <router-link :to="{ name: 'SignIn' }"
+                ><button class="btn btn-indigo">Sign In</button></router-link
+              >
+            </div>
+            <div v-if="authStore.isLoggedIn">
+              <button @click="authStore.logoutUser" class="btn btn-indigo">
+                Sign Out
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -202,5 +231,18 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
 .fade-enter-from,
 .fade-leave-to {
   @apply opacity-0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  @apply transition-all duration-300 ease-in;
+}
+
+.slide-enter-from {
+  @apply translate-x-0;
+}
+
+.slide-leave-to {
+  @apply translate-x-full;
 }
 </style>

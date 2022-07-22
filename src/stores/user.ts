@@ -9,8 +9,19 @@ export const useUserStore = defineStore("userStore", {
   state: (): State => ({
     prefersDark: false,
   }),
+  getters: {
+    isDark: (state: StateTree): boolean => state.prefersDark,
+  },
   actions: {
-    userWantsLight: (state: StateTree) => (state.prefersDark = false),
-    userWantsDark: (state: StateTree) => (state.prefersDark = true),
+    userWantsLight() {
+      this.prefersDark = false;
+    },
+    userWantsDark() {
+      this.prefersDark = true;
+    },
+    toggleDark() {
+      this.prefersDark ? (this.prefersDark = false) : (this.prefersDark = true);
+      console.log(this.prefersDark);
+    },
   },
 });
