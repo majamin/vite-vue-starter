@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { storeToRefs } from "pinia";
-import {
-  RouteRecordName,
-  RouteRecordRaw,
-  RouterLink,
-  RouterOptions,
-} from "vue-router";
+//import { storeToRefs } from "pinia";
+import { RouteRecordName, RouteRecordRaw, RouterLink } from "vue-router";
 
-import { useUserStore } from "@/stores";
+//import { useUserStore } from "@/stores";
 import { useAuthStore } from "@/stores";
 const authStore = useAuthStore();
 
 // Reference: https://vuejs.org/guide/typescript/composition-api.html
-const props = defineProps<{ routes?: RouterOptions["routes"] }>();
+const props = defineProps<{
+  routes: Array<RouteRecordRaw>;
+  dark: boolean;
+  loggedIn: boolean;
+  displayName: string | null;
+}>();
+
 const mainNavRoutes: RouteRecordRaw[] | null = props.routes
   ? props.routes.filter((route) => (route.meta ? route.meta.mainNav : false))
   : null;
@@ -27,10 +28,6 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
   route ? (subMenu.value = route.name) : null;
   // if (route) console.log(typeof route.name);
 };
-
-const userStore = useUserStore();
-const { prefersDark } = storeToRefs(userStore);
-const toggleDark = userStore.toggleDark;
 </script>
 
 <template>
@@ -79,7 +76,15 @@ const toggleDark = userStore.toggleDark;
             class="relative mt-2 mr-10 max-w-fit cursor-pointer rounded-lg py-2 text-sm font-semibold text-theme-blue-800 dark:text-white md:mt-0 md:ml-4"
             @mouseover="openSubMenu(route)"
           >
+            <router-link
+              v-if="!route.children"
+              :to="route.path"
+              class="after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] dark:after:bg-white"
+            >
+              {{ route.name }}
+            </router-link>
             <div
+              v-else
               class="after:absolute after:top-0 after:left-0 after:h-[0.1rem] after:w-0 after:transition-all after:duration-300 after:content-[''] after:hover:absolute after:hover:top-0 after:hover:left-0 after:hover:h-[0.1rem] after:hover:w-full after:hover:bg-theme-blue-200 after:hover:content-[''] dark:after:bg-white"
             >
               {{ route.name }}
@@ -103,14 +108,14 @@ const toggleDark = userStore.toggleDark;
         <!-- DARK MODE TOGGLE -->
         <div class="mr-4 flex w-14 flex-col items-center justify-center">
           <div
-            @click="toggleDark"
-            class="bg-theme-grey-100 h-6 w-16 cursor-pointer rounded-full p-1 shadow-inner shadow-zinc-400"
+            @click="$emit('toggleDark')"
+            class="h-6 w-16 cursor-pointer rounded-full bg-gray-100 p-1 shadow-inner shadow-zinc-400"
           >
             <div class="max-w-fit">
               <div
                 :class="{
-                  'dark:translate-x-10': prefersDark,
-                  'translate-x-0': !prefersDark,
+                  'dark:translate-x-10': dark,
+                  'translate-x-0': !dark,
                 }"
                 class="m-0 h-4 w-4 rounded-full bg-gradient-to-r from-white to-gray-100 shadow-sm shadow-zinc-500 transition-all duration-300"
               >
@@ -139,9 +144,7 @@ const toggleDark = userStore.toggleDark;
               "
               class="focus:shadow-outline mt-2 items-center rounded-lg bg-transparent px-4 py-2 text-left text-sm font-semibold hover:bg-gray-200 hover:text-gray-900 focus:bg-gray-200 focus:text-gray-900 focus:outline-none dark:bg-transparent dark:hover:bg-gray-600 dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white md:mt-0 md:ml-4 md:inline md:w-auto"
             >
-              <span>{{
-                authStore.profile ? authStore.profile.first : "First Name"
-              }}</span>
+              <span>{{ displayName }}</span>
               <svg
                 fill="currentColor"
                 viewBox="0 0 20 20"

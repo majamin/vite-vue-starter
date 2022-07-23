@@ -1,13 +1,16 @@
 <script setup lang="ts">
 //import { ref } from "vue";
-import { useUserStore } from "@/stores";
+import { useUserStore, useAuthStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { gsap } from "gsap/all";
 import { routes } from "@/router";
 import NavBar from "@/components/NavBar.vue";
 
+const authStore = useAuthStore();
+const { profile, user } = storeToRefs(authStore);
 const userStore = useUserStore();
 const { prefersDark } = storeToRefs(userStore);
+const toggleDark = userStore.toggleDark;
 
 /* GreenSock handles page transitions */
 const beforeEnterView = (el: HTMLDivElement | null) => {
@@ -27,7 +30,14 @@ const enterView = (el: HTMLDivElement | null, done: () => void) => {
 
 <template>
   <main :class="{ dark: prefersDark }">
-    <NavBar class="z-10 mb-14" :routes="routes" />
+    <NavBar
+      class="z-10 mb-14"
+      :routes="routes"
+      :dark="prefersDark"
+      :loggedIn="authStore.isLoggedIn"
+      :displayName="profile && profile.first ? profile.first : null"
+      @toggle-dark="toggleDark"
+    />
     <div class="mx-auto">
       <router-view v-slot="{ Component, route }">
         <transition

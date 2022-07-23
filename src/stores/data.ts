@@ -2,19 +2,19 @@ import { defineStore } from "pinia";
 import { fbCollectionListener, queryObjectCollection } from "./firebase";
 
 interface State {
-  images: any[] | null;
+  posts: any[] | null;
   error: null;
 }
 
-export const useImageStore = defineStore("imageStore", {
+export const usePostStore = defineStore("postStore", {
   // convert to a function
   state: (): State => ({
-    images: [],
+    posts: [],
     error: null,
   }),
   getters: {
-    allImages: (state) => state.images,
-    imageError: (state) => state.error,
+    allPosts: (state) => state.posts,
+    postError: (state) => state.error,
   },
   actions: {
     /**
@@ -27,27 +27,27 @@ export const useImageStore = defineStore("imageStore", {
     initializeCollectionListener(collectionName: string) {
       return new Promise((resolve) => {
         fbCollectionListener(collectionName, async (data: any) => {
-          this.images = data ? data : null;
+          this.posts = data ? data : null;
           this.error = null;
           resolve(true);
         });
       });
     },
     /**
-     * make intentional call to load images for collectsion
+     * make intentional call to load posts for collectsion
      *
      * @param data
      */
-    async loadImages() {
+    async loadPosts() {
       try {
         const data = await queryObjectCollection({
-          collectionName: "ImageInfo",
+          collectionName: "posts",
         });
-        this.images = data ? data : null;
+        this.posts = data ? data : null;
         this.error = null;
-        return this.images;
+        return this.posts;
       } catch (e: any) {
-        this.images = null;
+        this.posts = null;
         this.error = e;
         return false;
       }

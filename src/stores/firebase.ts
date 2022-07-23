@@ -98,7 +98,7 @@ export const fbSetUserProfile = async ({
   age: number;
 }) => {
   const user = auth.currentUser;
-  console.log(user);
+  // console.log(user);
 
   const ref = doc(db, "profiles", user?.uid as string);
   await setDoc(
@@ -116,7 +116,7 @@ export const fbSetUserProfile = async ({
 
 export const fbGetUserProfile = async () => {
   const user = auth.currentUser;
-  console.log(user);
+  // console.log(user);
 
   const ref = doc(db, "profiles", user?.uid as string);
   const docSnap = await getDoc(ref);

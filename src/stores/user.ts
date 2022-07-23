@@ -21,7 +21,7 @@ export const useUserStore = defineStore("userStore", {
     },
     toggleDark() {
       this.prefersDark ? (this.prefersDark = false) : (this.prefersDark = true);
-      console.log(this.prefersDark);
+      // console.log(this.prefersDark);
     },
   },
 });

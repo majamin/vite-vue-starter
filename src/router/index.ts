@@ -4,6 +4,7 @@ import "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
+import ForumView from "@/views/ForumView.vue";
 import NotFound from "@/views/NotFound.vue";
 import Register from "@/views/RegisterEmailPassword.vue";
 import SignIn from "@/views/SignIn.vue";
@@ -11,7 +12,7 @@ import UserProfile from "@/views/UserProfile.vue";
 
 const authCheck = (to: any, _: any, next: any) => {
   const store = useAuthStore();
-  console.log("authCheck", store.isLoggedIn);
+  // console.log("authCheck", store.isLoggedIn);
   if (store.isLoggedIn) {
     if (to.name === "SignIn") {
       next({ name: "Home" });
@@ -46,7 +47,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/about",
-    name: "Public",
+    name: "About",
     meta: { title: "About", mainNav: true },
     component: AboutView,
     children: [
@@ -63,22 +64,11 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/about",
-    name: "About",
-    meta: { title: "About", mainNav: true },
-    component: AboutView,
-    children: [
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
-      {
-        path: "nothing",
-        name: "Nothing",
-        component: NotFound,
-      },
-    ],
+    path: "/forum",
+    name: "Forum",
+    meta: { title: "Forum", mainNav: true, requireAuth: true },
+    component: ForumView,
+    beforeEnter: authCheck,
   },
   {
     path: "/register",
@@ -107,6 +97,8 @@ const router = createRouter({
   routes: routes,
 });
 
+// Re-direct non-authorized users attempting to access
+// authorization-required routes to sign-in page
 router.beforeEach(async (to, _, next) => {
   const authStore = useAuthStore();
   const authStatus = await authStore.initializeAuthListener();

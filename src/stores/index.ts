@@ -1,5 +1,5 @@
 import { useAuthStore } from "./auth";
-import { useImageStore } from "./data";
+import { usePostStore } from "./data";
 import { useUserStore } from "./user";
 
-export { useAuthStore, useImageStore, useUserStore };
+export { useAuthStore, usePostStore, useUserStore };

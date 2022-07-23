@@ -34,8 +34,9 @@ export const useAuthStore = defineStore("authStore", {
     error: null,
   }),
   getters: {
-    isLoggedIn: (state) => state.user !== null,
-    userError: (state) => state.error,
+    isLoggedIn(): boolean {
+      return this.user !== null;
+    },
   },
   actions: {
     /**
@@ -47,7 +48,6 @@ export const useAuthStore = defineStore("authStore", {
       return new Promise((resolve) => {
         fbAuthStateListener(async (user: any) => {
           this.user = user ? user : null;
-
           if (user) {
             const profile = (await fbGetUserProfile()) as any;
             this.profile = profile;
