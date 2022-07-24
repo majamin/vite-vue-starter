@@ -106,6 +106,7 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
           </div>
         </div>
         <!-- DARK MODE TOGGLE -->
+        <!--
         <div class="mr-4 flex w-14 flex-col items-center justify-center">
           <div
             @click="$emit('toggleDark')"
@@ -126,6 +127,7 @@ const openSubMenu = (route?: RouteRecordRaw | undefined) => {
             </div>
           </div>
         </div>
+        -->
         <!-- USER LINKS -->
         <div
           class="relative flex max-w-fit flex-col items-center justify-center md:flex-row"

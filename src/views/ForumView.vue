@@ -10,14 +10,33 @@ onMounted(async () => {
 
 <template>
   <!-- <pre>{{ JSON.stringify(postStore?.posts, null, 1) }}</pre> -->
-  <ul>
-    <li
-      v-for="post in postStore?.posts?.filter((p) => !p.replyTo)"
-      :key="post.uid"
-    >
-      <div>
-        <h3>{{ post.body }}</h3>
+  <div class="mx-auto flex max-w-5xl bg-blue-100">
+    <div class="w-1/4 bg-green-100">
+      <button class="btn btn-indigo">Start a Discussion</button>
+    </div>
+    <div class="ml-10 flex flex-col bg-red-100">
+      <div class="">
+        <div
+          class="my-4"
+          v-for="post in postStore?.posts?.filter((p) => !p.replyTo)"
+          :key="post.uid"
+        >
+          <div class="flex">
+            <div
+              class="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-slate-800 font-bold text-white"
+            >
+              M
+            </div>
+            <router-link
+              :to="{ name: 'PostDetails', params: { postid: post.id } }"
+            >
+              <div class="flex flex-col items-center justify-center">
+                <h5 class="mb-0 ml-4">{{ post.subject }}</h5>
+              </div>
+            </router-link>
+          </div>
+        </div>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>

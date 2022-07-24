@@ -5,6 +5,7 @@ import "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import ForumView from "@/views/ForumView.vue";
+import PostView from "@/views/PostView.vue";
 import NotFound from "@/views/NotFound.vue";
 import Register from "@/views/RegisterEmailPassword.vue";
 import SignIn from "@/views/SignIn.vue";
@@ -68,6 +69,13 @@ export const routes: Array<RouteRecordRaw> = [
     name: "Forum",
     meta: { title: "Forum", mainNav: true, requireAuth: true },
     component: ForumView,
+    beforeEnter: authCheck,
+  },
+  {
+    path: "/forum/post/:postid",
+    name: "PostDetails",
+    meta: { title: "Post Details", mainNav: false, requireAuth: true },
+    component: PostView,
     beforeEnter: authCheck,
   },
   {
