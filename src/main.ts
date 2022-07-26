@@ -3,6 +3,8 @@ import router from "@/router";
 
 // TailwindCSS
 import "./assets/styles/index.css";
+// Carousel styles
+import 'vue3-carousel/dist/carousel.css';
 
 import { createApp } from "vue";
 import App from "./App.vue";

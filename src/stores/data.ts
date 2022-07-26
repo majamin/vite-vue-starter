@@ -16,7 +16,7 @@ export const usePostStore = defineStore("postStore", {
     },
     getPost() {
       return (id: string | string[]) =>
-        this.posts?.find((post) => (post.id = id));
+        this.posts?.find((post) => (post.id == id));
     },
   },
   actions: {
